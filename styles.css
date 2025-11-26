@@ -1,0 +1,45 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #141414;
+    color: lightgray;
+    accent-color: #909090;
+}
+button {
+    font-size: 24px;
+    padding: 10px 20px;
+    margin: 10px auto;
+    cursor: pointer;
+    background-color: #bbbbbb;
+    color: #141414;
+    border: none;
+    border-radius: 30px;
+    width: fit-content;
+}
+video, img {
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+}
+h1 {
+    display: block;
+    margin: 20px auto;
+    width: fit-content;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+#optionA, #optionB, #optionC, #optionT, #optionN {
+    font-size: 20px;
+    display: none;
+}
+#csvAnswer {
+    display: none;
+    font-size: 24px;
+}

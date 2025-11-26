@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prawo Jazdy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+    <header>
+        <h1 id="csvQuestion"></h1>
+        <script src="https://unpkg.com/papaparse@5.5.3/papaparse.min.js"></script>
+        <script src="script.js"></script>
+    </header>
+    <main>
+        <button onclick="location.reload()">Odśwież</button>
+        <video id="csvVideoReal" style="display: none;" controls preload="auto" playsinline webkit-playsinline>
+            <source id="csvVideo" src="" type="video/mp4">
+            Twoja przeglądarka nie wspiera odtwarzania wideo.
+        </video>
+        <img id="csvImage" src="" style="display: none;">
+        <div id="options">
+            <button id="optionA" onclick="showAnswer()"></button>
+            <button id="optionB" onclick="showAnswer()"></button>
+            <button id="optionC" onclick="showAnswer()"></button>
+            <button id="optionT" onclick="showAnswer()"></button>
+            <button id="optionN" onclick="showAnswer()"></button>
+        </div>
+        <p id="csvAnswer"></p>
+    </main>
+    <footer>
+        
+    </footer>
+</body>
+</html>
