@@ -1,9 +1,10 @@
 Papa.parse("Pytania_egzaminacyjne_na_kierowcę_122025.csv", {
   download: true,
+  delimiter: ";",
   complete: function(results) {
     const data = results.data;
 
-    const row = Math.floor(Math.random() * (2021 - 1)) + 1;
+    const row = Math.floor(Math.random() * (2317 - 1)) + 1;
 
     const colQuestion = 2;
     const colFile = 7;
@@ -12,6 +13,14 @@ Papa.parse("Pytania_egzaminacyjne_na_kierowcę_122025.csv", {
     const optionB = 4;
     const optionC = 5;
     correctAnswer = data[row]?.[colAnswer]?.trim();
+
+    console.log("Selected Row:", row);
+    console.log("Question:", data[row]?.[colQuestion]);
+    console.log("Correct Answer:", correctAnswer);
+    console.log("Option A:", data[row]?.[optionA]);
+    console.log("Option B:", data[row]?.[optionB]);
+    console.log("Option C:", data[row]?.[optionC]);
+    console.log("File Name:", data[row]?.[colFile]);
 
     document.getElementById("csvQuestion").textContent = data[row]?.[colQuestion]?.trim() ?? "N/A";
     if (correctAnswer == "T") {
