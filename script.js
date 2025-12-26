@@ -1,4 +1,4 @@
-Papa.parse("pytania_egzaminacyjne_na_kierowcę_2025.csv", {
+Papa.parse("Pytania_egzaminacyjne_na_kierowcę_122025.csv", {
   download: true,
   complete: function(results) {
     const data = results.data;
@@ -45,7 +45,7 @@ Papa.parse("pytania_egzaminacyjne_na_kierowcę_2025.csv", {
         videoSource.parentElement.setAttribute("poster", "https://placehold.co/640x360?text=Błąd+wideo");
         videoSource.parentElement.removeAttribute("controls");
       }
-      videoSource.src = `filmy i zdjęcia/filmy_mp4/${fileName}`;
+      videoSource.src = `Pytania egzaminacyjne na prawo jazdy/filmy_mp4/${fileName}`;
       videoSource.parentElement.style.display = "block";
       videoSource.parentElement.load();
       document.getElementById("csvImage").style.display = "none";
@@ -53,7 +53,7 @@ Papa.parse("pytania_egzaminacyjne_na_kierowcę_2025.csv", {
       const imageSource = document.getElementById("csvImage");
 
       imageSource.onerror = () => imageSource.src = "https://placehold.co/640x360?text=Błąd+obrazu";
-      imageSource.src = `filmy i zdjęcia/zdjęcia/${fileName}`;
+      imageSource.src = `Pytania egzaminacyjne na prawo jazdy/zdjęcia/${fileName}`;
 
       imageSource.style.display = "block";
       document.getElementById("csvVideo").parentElement.style.display = "none";
