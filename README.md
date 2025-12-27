@@ -34,3 +34,4 @@ Więc jak właściwie to uruchomić, by działało?
 ### 2. Co zrobić dalej
 #### A. Rozpakuj plik .zip z filmami i zdjęciami do folderu z tym projektem i upewnij się, że rozpakowany folder nazywa się "Pytania egzaminacyjne na prawo jazdy"
 #### B.
+# Instrukcja zostanie wkrótce dokończona... W razie problemów lub pytań utwórz "problem" w https://github.com/DavidVar11/PrawoJazdy/issues
