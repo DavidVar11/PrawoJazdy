@@ -1,10 +1,12 @@
-Papa.parse("Pytania_egzaminacyjne_na_kierowcę_122025.csv", {
+Papa.parse("PytaniaEgzaminacyjne.csv", {
   download: true,
   delimiter: ";",
   complete: function(results) {
     const data = results.data;
 
-    const row = Math.floor(Math.random() * (2317 - 1)) + 1;
+    const numRows = data.length - 1;
+
+    const row = Math.floor(Math.random() * numRows) + 1;
 
     const colQuestion = 2;
     const colFile = 7;
@@ -13,6 +15,10 @@ Papa.parse("Pytania_egzaminacyjne_na_kierowcę_122025.csv", {
     const optionB = 4;
     const optionC = 5;
     correctAnswer = data[row]?.[colAnswer]?.trim();
+    question = data[row]?.[colQuestion]?.trim();
+    optionAText = data[row]?.[optionA]?.trim();
+    optionBText = data[row]?.[optionB]?.trim();
+    optionCText = data[row]?.[optionC]?.trim();
 
     console.log("Selected Row:", row);
     console.log("Question:", data[row]?.[colQuestion]);
@@ -22,18 +28,18 @@ Papa.parse("Pytania_egzaminacyjne_na_kierowcę_122025.csv", {
     console.log("Option C:", data[row]?.[optionC]);
     console.log("File Name:", data[row]?.[colFile]);
 
-    document.getElementById("csvQuestion").textContent = data[row]?.[colQuestion]?.trim() ?? "N/A";
-    if (correctAnswer == "T") {
-      document.getElementById("csvAnswer").textContent = "Tak";
-    } else if (correctAnswer == "N") {
-      document.getElementById("csvAnswer").textContent = "Nie";
-    } else {
-      document.getElementById("csvAnswer").textContent = correctAnswer ?? "N/A";
-    }
-    if (data[row]?.[optionA]?.trim() != "") {
-      document.getElementById("optionA").textContent = "A. " + (data[row]?.[optionA]?.trim() ?? "N/A");
-      document.getElementById("optionB").textContent = "B. " + (data[row]?.[optionB]?.trim() ?? "N/A");
-      document.getElementById("optionC").textContent = "C. " + (data[row]?.[optionC]?.trim() ?? "N/A");
+    document.getElementById("csvQuestion").textContent = question ?? "N/A";
+    // if (correctAnswer == "T") {
+    //   document.getElementById("csvAnswer").textContent = "Tak";
+    // } else if (correctAnswer == "N") {
+    //   document.getElementById("csvAnswer").textContent = "Nie";
+    // } else {
+    //   document.getElementById("csvAnswer").textContent = correctAnswer ?? "N/A";
+    // }
+    if (optionAText != "") {
+      document.getElementById("optionA").textContent = "A. " + optionAText;
+      document.getElementById("optionB").textContent = "B. " + optionBText;
+      document.getElementById("optionC").textContent = "C. " + optionCText;
       document.getElementById("optionA").style.display = "block";
       document.getElementById("optionB").style.display = "block";
       document.getElementById("optionC").style.display = "block";
@@ -58,7 +64,7 @@ Papa.parse("Pytania_egzaminacyjne_na_kierowcę_122025.csv", {
       videoSource.parentElement.style.display = "block";
       videoSource.parentElement.load();
       document.getElementById("csvImage").style.display = "none";
-    } else if (extension === 'jpg') {
+    } else if (extension === 'jpg' || extension === 'jpeg') {
       const imageSource = document.getElementById("csvImage");
 
       imageSource.onerror = () => imageSource.src = "https://placehold.co/640x360?text=Błąd+obrazu";
@@ -75,7 +81,7 @@ Papa.parse("Pytania_egzaminacyjne_na_kierowcę_122025.csv", {
   }
 });
 function showAnswer() {
-  document.getElementById("csvAnswer").style.display = "block";
+  // document.getElementById("csvAnswer").style.display = "block";
   if (correctAnswer == "T") {
     document.getElementById("optionT").style.backgroundColor = "lightgreen";
     document.getElementById("optionN").style.backgroundColor = "lightcoral";
