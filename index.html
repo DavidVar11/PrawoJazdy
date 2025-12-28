@@ -11,21 +11,27 @@
     <header>
         <h1 id="csvQuestion"></h1>
         <script src="https://unpkg.com/papaparse@5.5.3/papaparse.min.js"></script>
-        <script src="script.js"></script>
     </header>
     <main>
-        <button onclick="location.reload()">Odśwież</button>
+        <button onclick="loadNewQuestion()">Następne pytanie</button>
+
+        <div id="stats">
+            <p id="totalAnswerNumber">Liczba wszystkich odpowiedzi: 0</p>
+            <p id="correctAnswerNumber">Liczba poprawnych odpowiedzi: 0</p>
+            <p id="wrongAnswerNumber">Liczba błędnych odpowiedzi: 0</p>
+        </div>
+
         <video id="csvVideoReal" style="display: none;" controls preload="auto" playsinline webkit-playsinline>
             <source id="csvVideo" src="" type="video/mp4">
             Twoja przeglądarka nie wspiera odtwarzania wideo.
         </video>
         <img id="csvImage" src="" style="display: none;">
         <div id="options">
-            <button id="optionA" onclick="showAnswer()"></button>
-            <button id="optionB" onclick="showAnswer()"></button>
-            <button id="optionC" onclick="showAnswer()"></button>
-            <button id="optionT" onclick="showAnswer()"></button>
-            <button id="optionN" onclick="showAnswer()"></button>
+            <button id="optionA" onclick="selectedAnswer('A'), showAnswer()"></button>
+            <button id="optionB" onclick="selectedAnswer('B'), showAnswer()"></button>
+            <button id="optionC" onclick="selectedAnswer('C'), showAnswer()"></button>
+            <button id="optionT" onclick="selectedAnswer('T'), showAnswer()"></button>
+            <button id="optionN" onclick="selectedAnswer('N'), showAnswer()"></button>
         </div>
         <!-- <p id="csvAnswer"></p> -->
     </main>
@@ -33,6 +39,9 @@
         <a href="https://github.com/DavidVar11/PrawoJazdy/" target="_blank" rel="noopener noreferrer">
             Repozytorium GitHub
         </a>
+        <br>
+        <button id="resetStatsButton" onclick="resetStats()">Usuń wszystkie statystyki</button>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>

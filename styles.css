@@ -24,6 +24,10 @@ button {
     border: none;
     border-radius: 30px;
     width: fit-content;
+    transition: all 0.1s ease-out;
+}
+button:hover {
+    background-color: #888888;
 }
 video, img {
     display: block;
@@ -36,6 +40,7 @@ h1 {
     display: block;
     margin: 20px auto;
     width: fit-content;
+    max-width: 90%;
 }
 main {
     flex: 1;
@@ -64,4 +69,19 @@ footer a {
 }
 footer a:hover {
     text-decoration: underline;
+}
+#resetStatsButton {
+    font-size: 15px;
+    background-color: red;
+}
+#resetStatsButton:hover {
+    background-color: darkred;
+}
+#stats {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+#stats p {
+    margin: 0;
 }
