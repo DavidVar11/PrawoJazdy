@@ -66,9 +66,16 @@ footer a {
     text-decoration: none;
     color: #0366d6;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
 }
 footer a:hover {
     text-decoration: underline;
+}
+select {
+    color: lightgray;
+    background-color: gray;
 }
 #resetStatsButton {
     font-size: 15px;
@@ -84,4 +91,10 @@ footer a:hover {
 }
 #stats p {
     margin: 0;
+}
+#correctAnswerNumber {
+    color: lightgreen;
+}
+#wrongAnswerNumber {
+    color: lightcoral;
 }

@@ -1,5 +1,6 @@
 let correctAnswerCount = parseInt(localStorage.getItem('correctAnswerCount') || '0');
 let totalAnswerCount = parseInt(localStorage.getItem('totalAnswerCount') || '0');
+let selectedCategory = localStorage.getItem('selectedCategory') || 'B';
 let userAnswer = null;
 let correctAnswer;
 let question;
@@ -7,53 +8,71 @@ let optionAText;
 let optionBText;
 let optionCText;
 const buttons = ['optionA', 'optionB', 'optionC', 'optionT', 'optionN'];
+const categorySelect = document.getElementById("categorySelect");
+categorySelect.value = selectedCategory;
+categorySelect.addEventListener("change", () => {
+  selectedCategory = categorySelect.value;
+  localStorage.setItem('selectedCategory', selectedCategory);
+  loadNewQuestion();
+});
+
 
 function loadNewQuestion() {
-  Papa.parse("PytaniaEgzaminacyjne.csv", {
+  Papa.parse("PytaniaEgzaminacyjneFull.csv", {
     download: true,
     delimiter: ";",
     complete: function(results) {
       const data = results.data;
 
-      const numRows = data.length - 1;
-
-      const row = Math.floor(Math.random() * numRows) + 1;
-
+      // Columns
+      const categoryCol = 9;
       const colQuestion = 2;
       const colFile = 7;
       const colAnswer = 6;
       const optionA = 3;
       const optionB = 4;
       const optionC = 5;
-      correctAnswer = data[row]?.[colAnswer]?.trim();
-      question = data[row]?.[colQuestion]?.trim();
-      optionAText = data[row]?.[optionA]?.trim();
-      optionBText = data[row]?.[optionB]?.trim();
-      optionCText = data[row]?.[optionC]?.trim();
+
+      // Skip header row
+      const rows = data.slice(1);
+
+      // Filter rows by selected category
+      const matchingRows = rows.filter(row => {
+        const categoriesText = row[categoryCol]?.split(",").map(c => c.trim());
+        return categoriesText?.includes(selectedCategory);
+      });
+
+      if (matchingRows.length === 0) {
+        console.log("Brak pytań dla wybranej kategorii.");
+        return;
+      }
+
+      // Pick a random row
+      const row = matchingRows[Math.floor(Math.random() * matchingRows.length)];
+
+      // Assign question/answers
+      correctAnswer = row[colAnswer]?.trim();
+      question = row[colQuestion]?.trim();
+      optionAText = row[optionA]?.trim();
+      optionBText = row[optionB]?.trim();
+      optionCText = row[optionC]?.trim();
 
       userAnswer = null;
 
       resetButtons();
 
-      // Debug
-
-      // console.log("Selected Row:", row);
-      // console.log("Question:", data[row]?.[colQuestion]);
-      // console.log("Correct Answer:", correctAnswer);
-      // console.log("Option A:", data[row]?.[optionA]);
-      // console.log("Option B:", data[row]?.[optionB]);
-      // console.log("Option C:", data[row]?.[optionC]);
-      // console.log("File Name:", data[row]?.[colFile]);
-
+      // Display question/options
       document.getElementById("csvQuestion").textContent = question ?? "N/A";
-      // if (correctAnswer == "T") {
-      //   document.getElementById("csvAnswer").textContent = "Tak";
-      // } else if (correctAnswer == "N") {
-      //   document.getElementById("csvAnswer").textContent = "Nie";
-      // } else {
-      //   document.getElementById("csvAnswer").textContent = correctAnswer ?? "N/A";
-      // }
-      if (optionAText != "") {
+
+      // Debug (Do not remove)
+      // console.log("Selected Row:", row); 
+      // console.log("Question:", question); 
+      // console.log("Correct Answer:", correctAnswer); 
+      // console.log("Option A:", optionAText); 
+      // console.log("Option B:", optionBText); 
+      // console.log("Option C:", optionCText); 
+
+      if (optionAText) {
         document.getElementById("optionA").textContent = "A. " + optionAText;
         document.getElementById("optionB").textContent = "B. " + optionBText;
         document.getElementById("optionC").textContent = "C. " + optionCText;
@@ -67,13 +86,14 @@ function loadNewQuestion() {
         document.getElementById("optionN").style.display = "block";
       }
 
+      // Media handling
       const videoSource = document.getElementById("csvVideo");
       const imageSource = document.getElementById("csvImage");
-      
+
       videoSource.parentElement.style.display = "none";
       imageSource.style.display = "none";
 
-      const fileName = (data[row]?.[colFile] ?? "").trim();
+      const fileName = (row[colFile] ?? "").trim();
       if (!fileName) return;
 
       const extension = fileName.split('.').pop().toLowerCase();
@@ -82,7 +102,7 @@ function loadNewQuestion() {
         videoSource.onerror = () => {
           videoSource.parentElement.setAttribute("poster", "https://placehold.co/640x360?text=Błąd+wideo");
           videoSource.parentElement.removeAttribute("controls");
-        }
+        };
         videoSource.src = `Pytania egzaminacyjne na prawo jazdy/filmy_mp4/${fileName}`;
         videoSource.parentElement.style.display = "block";
         videoSource.parentElement.load();
@@ -96,7 +116,8 @@ function loadNewQuestion() {
         imageSource.src = "";
         imageSource.style.display = "none";
       }
-
+      // Debug (Do not remove)
+      // console.log("File Name:", fileName);
     },
     error: function(err) {
       console.error("Error parsing CSV:", err);
@@ -165,12 +186,12 @@ function showAnswer() {
   document.getElementById("optionN").style.cursor = "not-allowed";
   localStorage.setItem('correctAnswerCount', correctAnswerCount);
   localStorage.setItem('totalAnswerCount', totalAnswerCount);
-  document.getElementById("correctAnswerNumber").textContent = "Liczba poprawnych odpowiedzi: " + correctAnswerCount;
-  document.getElementById("totalAnswerNumber").textContent = "Liczba wszystkich odpowiedzi: " + totalAnswerCount;
-  document.getElementById("wrongAnswerNumber").textContent = "Liczba błędnych odpowiedzi: " + (totalAnswerCount - correctAnswerCount);
+  document.getElementById("correctAnswerNumber").textContent = "Poprawne: " + correctAnswerCount;
+  document.getElementById("totalAnswerNumber").textContent = "Wszystkie: " + totalAnswerCount;
+  document.getElementById("wrongAnswerNumber").textContent = "Błędne: " + (totalAnswerCount - correctAnswerCount);
 }
 
 loadNewQuestion();
-document.getElementById("correctAnswerNumber").textContent = "Liczba poprawnych odpowiedzi: " + correctAnswerCount;
-document.getElementById("totalAnswerNumber").textContent = "Liczba wszystkich odpowiedzi: " + totalAnswerCount;
-document.getElementById("wrongAnswerNumber").textContent = "Liczba błędnych odpowiedzi: " + (totalAnswerCount - correctAnswerCount);
+document.getElementById("correctAnswerNumber").textContent = "Poprawne: " + correctAnswerCount;
+document.getElementById("totalAnswerNumber").textContent = "Wszystkie: " + totalAnswerCount;
+document.getElementById("wrongAnswerNumber").textContent = "Błędne: " + (totalAnswerCount - correctAnswerCount);
